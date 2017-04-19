@@ -9,28 +9,85 @@
 import XCTest
 @testable import StringManipulation
 
+// sut = service under test
+
 class StringManipulationTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func testStringArray() {
+        let sut = "foo"
+        XCTAssertEqual(sut.stringArray, ["f","o","o"])
     }
     
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+    func testIsAlphaNumberic() {
+        var sut = "abc"
+        XCTAssertTrue(sut.isAlphaNumberic)
+        
+        sut = "123"
+        XCTAssertTrue(sut.isAlphaNumberic)
+        
+        sut = "12a"
+        XCTAssertTrue(sut.isAlphaNumberic)
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testIsWhiteSpaceOrPunctuation() {
+        var sut = " "
+        XCTAssertTrue(sut.isWhiteSpaceOrPunctuation)
+        
+        sut = "."
+        XCTAssertTrue(sut.isWhiteSpaceOrPunctuation)
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testNumberOfConsonants() {
+        var sut = "abc"
+        XCTAssertEqual(sut.numberOfConsonants, 2)
+        
+        sut = "123"
+        XCTAssertEqual(sut.numberOfConsonants, 0)
+        
+        sut = "Bad"
+        XCTAssertEqual(sut.numberOfConsonants, 2)
     }
     
+    func testNumberOfVowels() {
+        var sut = "abc"
+        XCTAssertEqual(sut.numberOfVowels, 1)
+        
+        sut = "123"
+        XCTAssertEqual(sut.numberOfVowels, 0)
+        
+        sut = "Abe"
+        XCTAssertEqual(sut.numberOfVowels, 2)
+    }
+    
+    func testNumberOfNumbers() {
+        var sut = "1bc"
+        XCTAssertEqual(sut.numberOfNumbers, 1)
+        
+        sut = "123"
+        XCTAssertEqual(sut.numberOfNumbers, 3)
+        
+        sut = "Bad"
+        XCTAssertEqual(sut.numberOfNumbers, 0)
+    }
+    
+    func testNumberOfPunctuationMarks() {
+        var sut = ",bc"
+        XCTAssertEqual(sut.numberOfPunctuationMarks, 1)
+        
+        sut = ",!;"
+        XCTAssertEqual(sut.numberOfPunctuationMarks, 3)
+        
+        sut = "Bad"
+        XCTAssertEqual(sut.numberOfPunctuationMarks, 0)
+    }
+    
+    func testStringStatistics() {
+        let sut = "3 Tacos, please."
+        let statistics = sut.stringStatistics
+        
+        XCTAssertEqual(statistics.numberOfConsonants, 6)
+        XCTAssertEqual(statistics.numberOfVowels, 5)
+        XCTAssertEqual(statistics.numberOfNumbers, 1)
+        XCTAssertEqual(statistics.numberOfPunctuationMarks, 2)
+    }
 }
