@@ -11,8 +11,11 @@ import XCTest
 class StringAbbreviationsTest: XCTestCase {
     
     func testAbbreviatedStrings() {
-        let sut = "Tacos are delicious."
+        var sut = "Tacos are delicious."
         XCTAssertEqual(sut.abbreviatedStrings, "T3s a1e d7s.")
+
+        sut = "abc 123"
+        XCTAssertEqual(sut.abbreviatedStrings, "a1c 113")
     }
     
     func testAbbreviatedString() {
@@ -24,7 +27,13 @@ class StringAbbreviationsTest: XCTestCase {
     }
     
     func testSentenceArray() {
-        let sut = "Tacos are delicious."
+        var sut = "Tacos are delicious."
         XCTAssertEqual(sut.sentenceArray, ["Tacos", " ", "are", " ", "delicious", "."])
+
+        sut = "abc 123"
+        XCTAssertEqual(sut.sentenceArray, ["abc", " ", "123"])
+
+        sut = "abc 1"
+        XCTAssertEqual(sut.sentenceArray, ["abc", " ", "1"])
     }
 }

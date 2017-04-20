@@ -40,25 +40,39 @@ extension String {
         var sentence = [String]()
         var word: [String]?
         
-        for string in stringArray {
+        for (index, string) in stringArray.enumerated() {
             let stringIsAlphaNumberic = string.isAlphaNumberic
             let stringIsWhiteSpaceOrPunctuation = string.isWhiteSpaceOrPunctuation
+            let isLastIndex = index == stringArray.count - 1
+
             if word != nil { // If we're building up a word
                 if stringIsAlphaNumberic { // If we get another letter continue the word
                     word?.append(string)
+                    handleIsLastIndex(isLastIndex, forWord: &word, forSentence: &sentence)
                 } else if stringIsWhiteSpaceOrPunctuation { // Else end the current word
-                    if let joined = word?.joined() {
-                        sentence.append(joined)
-                    }
-                    word = nil
+                    add(&word, toSentence: &sentence)
                     sentence.append(string)
                 }
             } else if stringIsAlphaNumberic { // Build a new word
                 word = [string]
+                handleIsLastIndex(isLastIndex, forWord: &word, forSentence: &sentence)
             } else if stringIsWhiteSpaceOrPunctuation {
                 sentence.append(string)
             }
         }
         return sentence
+    }
+
+    fileprivate func handleIsLastIndex(_ isLastIndex: Bool, forWord word: inout [String]?, forSentence sentence: inout [String]) {
+        if isLastIndex {
+            add(&word, toSentence: &sentence)
+        }
+    }
+
+    fileprivate func add(_ word: inout [String]?, toSentence sentence: inout [String]) {
+        if let joined = word?.joined() {
+            sentence.append(joined)
+        }
+        word = nil
     }
 }
